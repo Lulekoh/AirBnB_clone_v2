@@ -6,9 +6,9 @@ import sqlalchemy
 from sqlalchemy import Table, Column, Integer
 from sqlalchemy import Float, String, ForeignKey, MetaData
 from sqlalchemy.orm import relationship
+from os import getenv
 
-
-if models.storage_type == 'db':
+if getenv('HBNB_TYPE_STORAGE') == 'db':
     place_amenity = Table('place_amenity', Base.metadata,
                           Column('place_id', String(60),
                                  ForeignKey('places.id', onupdate='CASCADE',
@@ -25,7 +25,7 @@ if models.storage_type == 'db':
 
 class Place(BaseModel, Base):
     """ A place to stay """
-    if models.storage_type == "db":
+    if getenv('HBNB_TYPE_STORAGE') == "db":
         __tablename__ = 'places'
         city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
         user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
