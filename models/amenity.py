@@ -6,12 +6,14 @@ from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 
 
-class Amenity(BaseModel, Base):
-    """Doc"""
-    if models.storage_type == "db":
+if models.storage_type == 'db':
+    class Amenity(BaseModel, Base):
+        """Doc"""
         __tablename__ = 'amenities'
         name = Column(String(128), nullable=False)
         place_amenities = relationship("Place", secondary="place_amenity",
                                        back_populates="amenities")
-    else:
+else:
+    class Amenity(BaseModel):
+        """Amenity class"""
         name = ""

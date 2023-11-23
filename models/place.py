@@ -22,10 +22,8 @@ if getenv('HBNB_TYPE_STORAGE') == 'db':
                                  nullable=False)
                           )
 
-
-class Place(BaseModel, Base):
-    """ A place to stay """
-    if getenv('HBNB_TYPE_STORAGE') == "db":
+    class Place(BaseModel, Base):
+        """ A place to stay """        
         __tablename__ = 'places'
         city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
         user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
@@ -42,7 +40,9 @@ class Place(BaseModel, Base):
         amenities = relationship("Amenity", secondary="place_amenity",
                                  back_populates="place_amenities",
                                  viewonly=False)
-    else:
+else:
+    class Place(BaseModel):
+        """A place to stay"""
         city_id = ""
         user_id = ""
         name = ""
