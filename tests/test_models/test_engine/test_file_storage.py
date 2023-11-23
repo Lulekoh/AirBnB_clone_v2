@@ -6,7 +6,8 @@ from models import storage
 import os
 
 
-@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+@unittest.skipIf(
+        os.getenv('HBNB_TYPE_STORAGE') == 'db',
         'fileStorage test not supported')
 class test_fileStorage(unittest.TestCase):
     """ Class to test the file storage method """
@@ -23,8 +24,8 @@ class test_fileStorage(unittest.TestCase):
         """ Remove storage file at end of tests """
         try:
             os.remove('file.json')
-        except:
-            pass
+        except Exception as e:
+            print(e)
 
     def test_obj_list_empty(self):
         """ __objects is initially empty """
@@ -54,7 +55,7 @@ class test_fileStorage(unittest.TestCase):
         storage.save()
         self.assertTrue(new_state.id in str(storage.all(State)))
         storage.delete(new_state)
-             
+
     def test_base_model_instantiation(self):
         """ File is not created on BaseModel save """
         new = BaseModel()
@@ -122,4 +123,3 @@ class test_fileStorage(unittest.TestCase):
         from models.engine.file_storage import FileStorage
         print(type(storage))
         self.assertEqual(type(storage), FileStorage)
-

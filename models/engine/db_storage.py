@@ -16,8 +16,8 @@ from os import getenv
 
 class DBStorage:
     """DBStorage"""
-    __engine=None
-    __session=None
+    __engine = None
+    __session = None
 
     def __init__(self):
         """Constructor of class object"""

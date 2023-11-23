@@ -15,4 +15,3 @@ def clear_stream(stream: TextIO):
     if stream.seekable():
         stream.seek(0)
         stream.truncate(0)
-

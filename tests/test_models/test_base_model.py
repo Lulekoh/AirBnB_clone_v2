@@ -8,7 +8,8 @@ import json
 import os
 
 
-@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+@unittest.skipIf(
+        os.getenv('HBNB_TYPE_STORAGE') == 'db',
         'basemodel test not supported')
 class test_basemodel(unittest.TestCase):
     """ """
@@ -26,8 +27,8 @@ class test_basemodel(unittest.TestCase):
     def tearDown(self):
         try:
             os.remove('file.json')
-        except:
-            pass
+        except Exception as e:
+            print(e)
 
     def test_default(self):
         """ """
@@ -80,7 +81,6 @@ class test_basemodel(unittest.TestCase):
         """ """
         n = {'Name': 'test'}
         new = self.value(**n)
-        #print(new)
         self.assertEqual(new.Name, n['Name'])
 
     def test_id(self):
