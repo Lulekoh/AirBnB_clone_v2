@@ -1,37 +1,31 @@
 #!/usr/bin/python3
 """
-Fabric script based on previous task that distributes .tgz archive
+Fabric script based on the file 1-pack_web_static.py that distributes an
+archive to the web servers
 """
+
 from fabric.api import put, run, env
-from datetime import datetime
-from os import path
-
-env.hosts = ['35.153.98.141', '3.85.168.83']
-env.user = 'ubuntu'
-env.key_file = '~/.ssh/school'
+from os.path import exists
+env.hosts = ['3.85.168.83', '35.153.98.141']
 
 
-def do_depoy(archive_path):
-    """
-    Distribute files to web server and deploy
-    """
+def do_deploy(archive_path):
+    """distributes an archive to the web servers"""
+    if exists(archive_path) is False:
+        return False
     try:
-        if not (path.exists(archive_path)):
-            return False
+        file_n = archive_path.split("/")[-1]
+        no_ext = file_n.split(".")[0]
+        path = "/data/web_static/releases/"
         put(archive_path, '/tmp/')
-        timestamp = archive_path[-18:-4]
-        path_n = '/data/web_static/releases/web_static'
-        run(
-                'sudo mkdir -p {}_{}/'.format(path_n, timestamp))
-        run('sudo tar -xzf /tmp/web_static_{}.tgz -C {}_{}/'.format(
-            timestamp, path_n, timestamp))
-        run(
-                'sudo rm -rf {}_{}/web-static'.format(
-                    path_n,
-                    timestamp))
-        run('sudo ln -s {}_{}/ /data/web_static/current'.format(
-            path_n, timestamp))
+        run('mkdir -p {}{}/'.format(path, no_ext))
+        run('tar -xzf /tmp/{} -C {}{}/'.format(file_n, path, no_ext))
+        run('rm /tmp/{}'.format(file_n))
+        run('mv {0}{1}/web_static/* {0}{1}/'.format(path, no_ext))
+        run('rm -rf {}{}/web_static'.format(path, no_ext))
+        run('rm -rf /data/web_static/current')
+        run('ln -s {}{}/ /data/web_static/current'.format(path, no_ext))
+        return True
     except Exception as err:
         print(err)
         return False
-    return True
