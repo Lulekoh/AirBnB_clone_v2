@@ -29,7 +29,8 @@ def route_3(text):
 @app.route("/python/<text>", strict_slashes=False)
 def route_4(text="is cool"):
     """fourth route"""
-    new_text = re.sub(r"_", " ", text)
+    if text != 'is cool':
+        new_text = re.sub(r"_", " ", text)
     return "Python {}".format(new_text)
 
 
