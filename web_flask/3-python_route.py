@@ -26,7 +26,7 @@ def route_3(text):
     return "C {}".format(new_text)
 
 
-@app.route("/python/", strict_slashes=False)
+@app.route("/python", strict_slashes=False)
 @app.route("/python/<text>", strict_slashes=False)
 def route_4(text='is cool'):
     """fourth route"""
