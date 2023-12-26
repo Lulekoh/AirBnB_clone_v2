@@ -31,8 +31,8 @@ def route_3(text):
 def route_4(text='is cool'):
     """fourth route"""
     if text != 'is cool':
-        new_text = re.sub(r"_", " ", text)
-    return "Python {}".format(new_text)
+        text = re.sub(r"_", " ", text)
+    return "Python {}".format(text)
 
 
 if __name__ == "__main__":
