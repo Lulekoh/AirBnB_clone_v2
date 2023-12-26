@@ -23,7 +23,7 @@ def route_2():
 def route_3(text):
     """third route"""
     new_text = re.sub(r"_", " ", text)
-    return "C is {}".format(new_text)
+    return "C {}".format(new_text)
 
 
 if __name__ == "__main__":
