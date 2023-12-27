@@ -8,13 +8,13 @@ from models.state import State
 app = Flask(__name__)
 
 
-@app.teardown_appcontent
-def teardown_appcontext(exception):
+@app.teardown_appcontext
+def teardown(exception):
     """method that handles storage.close()"""
     storage.close()
 
 
-@app.route('/states_lsit', strict_slashes=False)
+@app.route('/states_list', strict_slashes=False)
 def states():
     """list all states"""
     states = storage.all('State')
